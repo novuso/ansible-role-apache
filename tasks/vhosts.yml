@@ -1,0 +1,31 @@
+---
+- name: "virtualhost config"
+  sudo: yes
+  template:
+    src: "vhost.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  with_items: apache_virtual_hosts
+  when: apache_create_vhosts and item.name is defined
+  notify: "apache restart"
+
+- name: "virtualhost symlinks"
+  sudo: yes
+  file:
+    src: "/etc/apache2/sites-available/{{ item.name }}.conf"
+    dest: "/etc/apache2/sites-enabled/{{ item.name }}.conf"
+    state: link
+    force: yes
+  with_items: apache_virtual_hosts
+  when: apache_create_vhosts and item.name is defined
+  notify: "apache restart"
+
+- name: "default site"
+  sudo: yes
+  command: "a2dissite 000-default"
+  args:
+    removes: "/etc/apache2/sites-enabled/000-default.conf"
+  when: apache_disable_default_vhost
+  notify: "apache restart"

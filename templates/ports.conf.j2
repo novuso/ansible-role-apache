@@ -1,0 +1,17 @@
+# {{ ansible_managed }}
+
+{% if apache_listen_http %}
+Listen {{ apache_listen_http }}
+{% endif %}
+
+{% if apache_listen_https %}
+<IfModule ssl_module>
+    Listen {{ apache_listen_https }}
+</IfModule>
+
+<IfModule mod_gnutls.c>
+    Listen {{ apache_listen_https }}
+</IfModule>
+{% endif %}
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

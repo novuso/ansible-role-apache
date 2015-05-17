@@ -1,0 +1,74 @@
+---
+- name: "apache run user"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/apache2/envvars"
+    regexp: "^export APACHE_RUN_USER="
+    line: "export APACHE_RUN_USER={{ apache_run_user }}"
+    state: present
+
+- name: "apache run group"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/apache2/envvars"
+    regexp: "^export APACHE_RUN_GROUP="
+    line: "export APACHE_RUN_GROUP={{ apache_run_group }}"
+    state: present
+
+- name: "ports config"
+  sudo: yes
+  template:
+    src: "ports.conf.j2"
+    dest: "/etc/apache2/ports.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: "config directories"
+  sudo: yes
+  file:
+    dest: "/etc/apache2/{{ item }}"
+    state: directory
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  with_items:
+  - "sites-available"
+  - "sites-enabled"
+  - "conf-available"
+  - "conf-enabled"
+
+- name: "conf include"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/apache2/apache2.conf"
+    regexp: "^IncludeOptional conf-enabled"
+    line: "IncludeOptional conf-enabled/*.conf"
+    state: present
+
+- name: "sites include"
+  sudo: yes
+  lineinfile:
+    dest: "/etc/apache2/apache2.conf"
+    regexp: "^IncludeOptional sites-enabled"
+    line: "IncludeOptional sites-enabled/*.conf"
+    state: present
+
+- name: "override config"
+  sudo: yes
+  template:
+    src: "override.conf.j2"
+    dest: "/etc/apache2/conf-available/override.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+  notify: "apache restart"
+
+- name: "override enable"
+  sudo: yes
+  file:
+    src: "/etc/apache2/conf-available/override.conf"
+    dest: "/etc/apache2/conf-enabled/z10-override.conf"
+    state: link
+    force: yes
+  notify: "apache restart"

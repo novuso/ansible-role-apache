@@ -1,0 +1,129 @@
+# {{ ansible_managed }}
+
+{% if apache_listen_http %}
+<VirtualHost *:{{ apache_listen_http }}>
+    ServerName {{ item.server_name }}
+{% if item.server_aliases is defined %}
+{% for alias in item.server_aliases %}
+    ServerAlias {{ alias }}
+{% endfor %}
+{% endif %}
+{% if item.server_admin is defined %}
+    ServerAdmin {{ item.server_admin }}
+{% endif %}
+{% if item.directory_index is defined %}
+    DirectoryIndex {{ item.directory_index }}
+{% endif %}
+
+    DocumentRoot {{ item.document_root }}
+
+    <Directory {{ item.document_root }}>
+        AllowOverride All
+        Options -Indexes +FollowSymLinks
+        Require all granted
+    </Directory>
+{% if item.files_match is defined %}
+
+    <FilesMatch {{ item.files_match.match }}>
+        SetHandler "{{ item.files_match.handler }}"
+    </FilesMatch>
+{% endif %}
+{% if item.proxy_pass_match is defined %}
+
+    ProxyPassMatch {{ item.proxy_pass_match.match }} {{ item.proxy_pass_match.uri }}
+{% endif %}
+{% if item.proxy is defined %}
+
+    <Proxy {{ item.proxy.match }}>
+{% for directive in item.proxy.directives %}
+        {{ directive }}
+{% endfor %}
+    </Proxy>
+{% endif %}
+{% if item.locations is defined %}
+{% for location in item.locations %}
+
+    <Location {{ location.match }}>
+{% if location.proxy_pass is defined %}
+        ProxyPass {{ location.proxy_pass }}
+{% endif %}
+{% if location.proxy_pass_reverse is defined %}
+        ProxyPassReverse {{ location.proxy_pass_reverse }}
+{% endif %}
+    </Location>
+{% endfor %}
+{% endif %}
+
+    ErrorLog {{ apache_logs_dir }}/{{ item.name }}-error.log
+    CustomLog {{ apache_logs_dir }}/{{ item.name }}-access.log combined
+</VirtualHost>
+{% endif %}
+{% if item.ssl_enabled is defined %}
+{% if apache_listen_https and item.ssl_enabled and item.ssl_cert_file and item.ssl_cert_key %}
+<VirtualHost *:{{ apache_listen_https }}>
+    SSLEngine On
+    SSLCertificateFile {{ item.ssl_cert_file }}
+    SSLCertificateKeyFile {{ item.ssl_cert_key }}
+{% if item.ssl_cert_chain is defined %}
+    SSLCertificateChainFile {{ item.ssl_cert_chain }}
+{% endif %}
+
+    ServerName {{ item.server_name }}
+{% if item.server_aliases is defined %}
+{% for alias in item.server_aliases %}
+    ServerAlias {{ alias }}
+{% endfor %}
+{% endif %}
+{% if item.server_admin is defined %}
+    ServerAdmin {{ item.server_admin }}
+{% endif %}
+{% if item.directory_index is defined %}
+    DirectoryIndex {{ item.directory_index }}
+{% endif %}
+
+    DocumentRoot {{ item.document_root }}
+
+    <Directory {{ item.document_root }}>
+        AllowOverride All
+        Options -Indexes +FollowSymLinks
+        Require all granted
+    </Directory>
+{% if item.files_match is defined %}
+
+    <FilesMatch {{ item.files_match.match }}>
+        SetHandler "{{ item.files_match.handler }}"
+    </FilesMatch>
+{% endif %}
+{% if item.proxy_pass_match is defined %}
+
+    ProxyPassMatch {{ item.proxy_pass_match.match }} {{ item.proxy_pass_match.uri }}
+{% endif %}
+{% if item.proxy is defined %}
+
+    <Proxy {{ item.proxy.match }}>
+{% for directive in item.proxy.directives %}
+        {{ directive }}
+{% endfor %}
+    </Proxy>
+{% endif %}
+{% if item.locations is defined %}
+{% for location in item.locations %}
+
+    <Location {{ location.match }}>
+{% if location.proxy_pass is defined %}
+        ProxyPass {{ location.proxy_pass }}
+{% endif %}
+{% if location.proxy_pass_reverse is defined %}
+        ProxyPassReverse {{ location.proxy_pass_reverse }}
+{% endif %}
+    </Location>
+{% endfor %}
+{% endif %}
+
+    ErrorLog {{ apache_logs_dir }}/{{ item.name }}-error.log
+    CustomLog {{ apache_logs_dir }}/{{ item.name }}-access.log combined
+</VirtualHost>
+{% endif %}
+{% endif %}
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet

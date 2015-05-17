@@ -1,0 +1,75 @@
+---
+# apache_ppa_repo
+# - repo: "ondrej/apache2"                       #required
+#   state: present                               #default
+#   update_cache: yes                            #default
+#   validate_certs: yes                          #default
+apache_ppa_repo:
+- repo: "ondrej/apache2"
+# apache_packages
+# - name: "apache2"                              #required
+#   state: present                               #default
+apache_packages:
+- name: "apache2"
+- name: "apache2-mpm-prefork"
+- name: "apache2-utils"
+apache_run_user: "www-data"
+apache_run_group: "www-data"
+apache_logs_dir: "/var/log/apache2"
+apache_create_vhosts: true
+apache_disable_default_vhost: true
+apache_listen_http: "80"
+apache_listen_https: "443"
+apache_server_name: "localhost"
+apache_server_tokens: "Prod"
+apache_server_signature: "Off"
+apache_trace_enable: "Off"
+apache_timeout: "300"
+apache_keep_alive: "On"
+apache_max_keep_alive_requests: "100"
+apache_keep_alive_timeout: "5"
+apache_log_level: "warn"
+# apache_mods
+# - name: "rewrite"                              #required
+#   state: present                               #default
+apache_mods:
+- name: "rewrite"
+- name: "headers"
+- name: "filter"
+- name: "expires"
+- name: "include"
+- name: "ssl"
+- name: proxy
+- name: proxy_http
+- name: proxy_fcgi
+# apache_virtual_hosts
+apache_virtual_hosts: []
+# example virtual host
+# see: templates/vhost.conf.j2
+#- name: "local"                                 #required
+#  server_name: "local.dev"                      #required
+#  document_root: "/var/www/html"                #required
+#  server_aliases: ["www.local.dev"]
+#  server_admin: "webmaster@localhost"
+#  directory_index: "index.html index.htm index.php"
+#  ssl_enabled: true
+#  ssl_cert_file: "/srv/ssl/certs/local.crt"
+#  ssl_cert_key: "/srv/ssl/private/local.key"
+#  ssl_cert_chain: "/srv/ssl/certs/local.pem"
+#  files_match:
+#    match: "\\.php$"
+#    handler: "proxy:fcgi://127.0.0.1:9000"
+#  proxy_pass_match:
+#    match: "^/(.*\\.php(/.*)?)$"
+#    uri: "fcgi://127.0.0.1:9000/var/www/html/$1"
+#  proxy:
+#    match: "*"
+#    directives:
+#    - "Order allow,deny"
+#    - "Allow from all"
+#  locations:
+#  - match: "/"
+#    proxy_pass: "http://localhost:9000/"
+#    proxy_pass_reverse: "http://localhost:9000/"
+#  - match: "/static"
+#    proxy_pass: "!"

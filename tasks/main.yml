@@ -1,0 +1,40 @@
+---
+- name: "apache repository"
+  sudo: yes
+  apt_repository:
+    repo: "ppa:{{ item.repo }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ item.update_cache | default('yes') }}"
+    validate_certs: "{{ item.validate_certs | default('yes') }}"
+  with_items: apache_ppa_repo
+  when: item.repo is defined
+
+- name: "apache installed"
+  sudo: yes
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items: apache_packages
+  when: item.name is defined
+
+- name: "apache enabled"
+  sudo: yes
+  service:
+    name: "apache2"
+    state: started
+    enabled: yes
+
+- name: "apache mods"
+  sudo: yes
+  apache2_module:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  with_items: apache_mods
+  when: item.name is defined
+  notify: "apache restart"
+
+- include: "config.yml"
+
+- include: "vhosts.yml"

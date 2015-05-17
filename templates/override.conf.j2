@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+# Global
+Timeout {{ apache_timeout }}
+KeepAlive {{ apache_keep_alive }}
+MaxKeepAliveRequests {{ apache_max_keep_alive_requests }}
+KeepAliveTimeout {{ apache_keep_alive_timeout }}
+LogLevel {{ apache_log_level }}
+
+# Security
+ServerName {{ apache_server_name }}
+ServerTokens {{ apache_server_tokens }}
+ServerSignature {{ apache_server_signature }}
+TraceEnable {{ apache_trace_enable }}
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
