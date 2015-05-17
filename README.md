@@ -133,28 +133,55 @@ By default, the following modules are enabled:
 
 Each virtual host entry may designate:
 
-* **name** *required* (This is generally lowercase hypenated - example: "project")
-* **server_name** *required* (The primary domain name - example: "project.dev")
-* **document_root** *required* (Absolute path to the document root - example: "/var/www/project/public")
-* **server_aliases** *optional* (A list of server aliases - example: ["www.project.dev"])
-* **server_admin** *optional* (Server admin email address - example: "webmaster@project.dev")
-* **directory_index** *optional* (Default index files for a directory - example: "index.html index.php")
-* **ssl_enabled** *optional* (Whether or not to enable HTTPS - example: true)
+* **name** *required*
+    * This is generally lowercase hypenated - example: "project"
+* **server_name** *required*
+    * The primary domain name - example: "project.dev"
+* **document_root** *required*
+    * Absolute path to the document root - example: "/var/www/project/public"
+* **server_aliases** *optional*
+    * A list of server aliases - example: \["www.project.dev"\]
+* **server_admin** *optional*
+    * Server admin email address - example: "webmaster&#64;project"
+* **directory_index** *optional*
+    * Default index files for a directory - example: "index.html index.php"
+* **ssl_enabled** *optional*
+    * Whether or not to enable HTTPS - example: true
 * **ssl_cert_file** *required if ssl_enabled is true*
-(Absolute path to the SSL certificate file - example: "/srv/ssl/certs/project.crt")
+    * Absolute path to the SSL certificate file - example: "/srv/ssl/certs/project.crt"
 * **ssl_cert_key** *required is ssl_enabled is true*
-(Absolute path to the SSL key file - example: "/srv/ssl/private/project.key")
-* **ssl_cert_chain** *optional* (Absolute path to the SSL cert chain file - example: "/srv/ssl/certs/project.pem")
-* **files_match** *optional* (Hash of FilesMatch configuration) example:
-    * **match** *required* example: "\\.php$"
-    * **handler** *required* example: "proxy:fcgi://127.0.0.1:9000"
-* **proxy_pass_match** *optional* (Hash of ProxyPassMatch configuration) example:
-    * **match** *required* example: "^/(.*\\.php(/.*)?)$"
-    * **uri** *required* example: "fcgi://127.0.0.1:9000/var/www/html/$1"
-* **proxy** *optional* (Hash of Proxy configuration) example:
-    * **match** *required* example: "*"
-    * **directives* *required* (directive list) example: ["Order allow,deny", "Allow from all"]
-* **locations** *optional* (List of Location configurations) example:
+    * Absolute path to the SSL key file - example: "/srv/ssl/private/project.key"
+* **ssl_cert_chain** *optional*
+    * Absolute path to the SSL cert chain file - example: "/srv/ssl/certs/project.pem"
+* **files_match** *optional* (Hash of FilesMatch configuration)
+
+`files_match` example:
+
+    files_match:
+        match: "\\.php$"
+        handler: "proxy:fcgi://127.0.0.1:9000"
+
+* **proxy_pass_match** *optional* (Hash of ProxyPassMatch configuration)
+
+`proxy_pass_match` example:
+
+    proxy_pass_match:
+        match: "^/(.*\\.php(/.*)?)$"
+        uri: "fcgi://127.0.0.1:9000/var/www/html/$1"
+
+* **proxy** *optional* (Hash of Proxy configuration)
+
+`proxy` example:
+
+    proxy:
+        match: "*"
+        directives:
+        - "Order allow,deny"
+        - "Allow from all"
+
+* **locations** *optional* (List of Location configurations)
+
+`locations` example:
 
     locations:
     - match: "/"
