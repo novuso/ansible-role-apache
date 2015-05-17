@@ -207,7 +207,7 @@ None
           document_root: "/var/www/html"
           directory_index: "index.php"
       roles:
-      - ansible-role-apache
+      - novuso.apache
 
 ## License
 
