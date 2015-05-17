@@ -2,7 +2,7 @@
 
 [![MIT License](http://img.shields.io/badge/license-MIT-003399.svg)](http://opensource.org/licenses/MIT)
 
-An Ansible Role that installs and configures Apache on Ubuntu 14.04
+An Ansible role that installs and configures Apache on Ubuntu 14.04
 
 ## Requirements
 
@@ -10,9 +10,9 @@ None
 
 ## Role Variables
 
-### Global
-
 Ansible variables are listed here along with their default values:
+
+### Global
 
 `apache_ppa_repo` is a list of Ubuntu PPA repositories that are managed for
 this role. Each entry in the list may designate:
