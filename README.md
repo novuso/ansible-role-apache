@@ -140,9 +140,9 @@ Each virtual host entry may designate:
 * **document_root** *required*
     * Absolute path to the document root - example: "/var/www/project/public"
 * **server_aliases** *optional*
-    * A list of server aliases - example: \["www&#46;project&#46;dev"\]
+    * A list of server aliases - example: \["www\.project\.dev"\]
 * **server_admin** *optional*
-    * Server admin email address - example: "webmaster&#64;project"
+    * Server admin email address - example: "webmaster\@project\.dev"
 * **directory_index** *optional*
     * Default index files for a directory - example: "index.html index.php"
 * **ssl_enabled** *optional*
