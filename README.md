@@ -134,25 +134,25 @@ By default, the following modules are enabled:
 Each virtual host entry may designate:
 
 * **name** *required*
-    * This is generally lowercase hypenated - example: "project"
+    * This is generally lowercase hypenated - example: `"project"`
 * **server_name** *required*
-    * The primary domain name - example: "project.dev"
+    * The primary domain name - example: `"project.dev"`
 * **document_root** *required*
-    * Absolute path to the document root - example: "/var/www/project/public"
+    * Absolute path to the document root - example: `"/var/www/project/public"`
 * **server_aliases** *optional*
-    * A list of server aliases - example: \["www\.project\.dev"\]
+    * A list of server aliases - example: `["www.project.dev"]`
 * **server_admin** *optional*
-    * Server admin email address - example: "webmaster\@project\.dev"
+    * Server admin email address - example: `"webmaster@project.dev"`
 * **directory_index** *optional*
-    * Default index files for a directory - example: "index.html index.php"
+    * Default index files for a directory - example: `"index.html index.php"`
 * **ssl_enabled** *optional*
-    * Whether or not to enable HTTPS - example: true
+    * Whether or not to enable HTTPS - example: `true`
 * **ssl_cert_file** *required if ssl_enabled is true*
-    * Absolute path to the SSL certificate file - example: "/srv/ssl/certs/project.crt"
+    * Absolute path to the SSL certificate file - example: `"/srv/ssl/certs/project.crt"`
 * **ssl_cert_key** *required is ssl_enabled is true*
-    * Absolute path to the SSL key file - example: "/srv/ssl/private/project.key"
+    * Absolute path to the SSL key file - example: `"/srv/ssl/private/project.key"`
 * **ssl_cert_chain** *optional*
-    * Absolute path to the SSL cert chain file - example: "/srv/ssl/certs/project.pem"
+    * Absolute path to the SSL cert chain file - example: `"/srv/ssl/certs/project.pem"`
 * **files_match** *optional* (Hash of FilesMatch configuration)
 
 `files_match` example:
