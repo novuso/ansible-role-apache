@@ -1,0 +1,6 @@
+---
+- hosts: all
+  vars:
+  - apache_disable_default_vhost: false
+  roles:
+  - ansible-role-apache
