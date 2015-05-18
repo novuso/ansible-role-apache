@@ -18,4 +18,8 @@ script:
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
-  - "curl http://localhost/"
+  - >
+    curl http://localhost/
+    | grep -q 'It works'
+    && (echo 'HTTP server test: pass' && exit 0)
+    || (echo 'HTTP server test: fail' && exit 1)
