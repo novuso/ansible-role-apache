@@ -36,5 +36,4 @@
   notify: "apache restart"
 
 - include: "config.yml"
-
 - include: "vhosts.yml"
