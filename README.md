@@ -35,13 +35,10 @@ Each entry in the list may designate:
 * **name** *required*
 * **state** (default is present)
 
-By default, the `apache2`, `apache2-mpm-prefork`, and `apache2-utils` packages
-are used:
+By default, the `apache2` package is used:
 
     apache_packages:
     - name: "apache2"
-    - name: "apache2-mpm-prefork"
-    - name: "apache2-utils"
 
 `apache_run_user` sets the Apache user:
 
