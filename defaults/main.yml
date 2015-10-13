@@ -11,8 +11,6 @@ apache_ppa_repo:
 #   state: present                               #default
 apache_packages:
 - name: "apache2"
-- name: "apache2-mpm-prefork"
-- name: "apache2-utils"
 apache_run_user: "www-data"
 apache_run_group: "www-data"
 apache_logs_dir: "/var/log/apache2"
